@@ -1,5 +1,5 @@
-# NRS528_Justin
-
+# Justin Purcell - Introduction
+![Profile](https://media.licdn.com/dms/image/C4E03AQFuyfjZqAeIzQ/profile-displayphoto-shrink_200_200/0/1610384535007?e=1680134400&v=beta&t=-sQH2T5KwJG0lewvfjyuMtMchXJGppyCGimNbmU_sEc)
 ## Background
 
 Hi everyone!
@@ -21,6 +21,4 @@ I look forward to getting to know my fellow classmates by the end of the semeste
 
 Email: justin_purcell@uri.edu
 
-Feel free to connect with me on Linkedin:
-
-https://www.linkedin.com/in/justinpurcell20/
+Feel free to connect with me on [Linkedin](https://www.linkedin.com/in/justinpurcell20/)
