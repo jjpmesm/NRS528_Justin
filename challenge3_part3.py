@@ -6,7 +6,6 @@
 import csv
 
 years = []
-year = []
 ppm = []
 with open('challenge3_part3.csv') as date_csv:
     next(date_csv)
@@ -15,6 +14,7 @@ with open('challenge3_part3.csv') as date_csv:
         year, month, day = date.split("-")
         if year not in years:
             years.append(year)
+print(years)
 
 for year_test in years:
     total = 0
@@ -24,11 +24,11 @@ for year_test in years:
             year, month, day = row[0].split("-")
             if year == year_test:
                 total += float(row[1])
-    print(year + ": " + str(total)) # Make an average, right now is a sum
+    print(year + ": " + (str(total)/len(str(total))))
+#
+# # Minimum, maximum and average for the entire dataset.
+#
 
-# Minimum, maximum and average for the entire dataset.
-#
-#
 with open('challenge3_part3.csv') as value_csv:
     next(value_csv)
     for row in csv.reader(value_csv):
@@ -39,7 +39,6 @@ with open('challenge3_part3.csv') as value_csv:
 print(ppm)
 print(min(ppm))
 print(max(ppm))
-
 with open('challenge3_part3.csv') as value_csv:
     next(value_csv)
     total = 0
@@ -48,8 +47,8 @@ with open('challenge3_part3.csv') as value_csv:
     print(format(total, 'f'))
     print(total/len(ppm))
     mean_ppm_all_dataset = total/len(ppm)
-
-# # Seasonal average if Spring (March, April, May), Summer (June, July, August), Autumn (September, October, November) and Winter (December, January, February).
+#
+# # # # Seasonal average if Spring (March, April, May), Summer (June, July, August), Autumn (September, October, November) and Winter (December, January, February).
 spring_list = ['03', '04', '05']
 summer_list = ['06', '07', '08']
 autumn_list = ['09', '10', '11']
@@ -82,14 +81,14 @@ print("Autumn value:")
 print(sum(autumn_value_list)/len(autumn_value_list))
 print("Winter value:")
 print(sum(winter_value_list)/len(winter_value_list))
+# #
+# # Calculate the anomaly for each value in the dataset relative to the mean for the entire time series.
 #
-# Calculate the anomaly for each value in the dataset relative to the mean for the entire time series.
-
-# current value - mean
+# # current value - mean
 #
 # 1. calculate mean for entire dataset DONE
 # 2. Subtract mean value from each observation
-
+#
 with open('challenge3_part3.csv') as date_csv:
     next(date_csv)
     for row in csv.reader(date_csv):
