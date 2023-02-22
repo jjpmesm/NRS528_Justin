@@ -18,16 +18,25 @@ print(years)
 
 for year_test in years:
     total = 0
+    counter = 0
+    initial_math_value = 0.0
     with open("challenge3_part3.csv") as value_csv:
         next(value_csv)
         for row in csv.reader(value_csv):
             year, month, day = row[0].split("-")
             if year == year_test:
                 total += float(row[1])
-    print(year + ": " + (str(total)/len(str(total))))
-#
-# # Minimum, maximum and average for the entire dataset.
-#
+        for i in csv.reader(value_csv):
+            counter = counter + 1
+            initial_math_value = initial_math_value + float(i)
+    print(year + ": " + str(total))
+    print(counter)
+    print(initial_math_value)
+    print(initial_math_value / counter)
+
+
+# Minimum, maximum and average for the entire dataset.
+
 
 with open('challenge3_part3.csv') as value_csv:
     next(value_csv)
@@ -47,6 +56,7 @@ with open('challenge3_part3.csv') as value_csv:
     print(format(total, 'f'))
     print(total/len(ppm))
     mean_ppm_all_dataset = total/len(ppm)
+    print(type(total))
 #
 # # # # Seasonal average if Spring (March, April, May), Summer (June, July, August), Autumn (September, October, November) and Winter (December, January, February).
 spring_list = ['03', '04', '05']
