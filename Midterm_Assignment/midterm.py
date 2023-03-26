@@ -8,7 +8,10 @@
 import arcpy
 import csv
 arcpy.env.overwriteOutput = True
-arcpy.env.workspace = r"C:\NRS_528\Coding_Challenges\NRS528_Justin\Midterm_Assignment"
+
+# USers please change this
+arcpy.env.workspace = r"C:\Data\Students_2023\Purcell\Midterm_Assignment"
+where_clause = '"NAME" = \'GLOCESTER\'' #Change Glocester to whatever you want (must be from;;;)
 
 # Now we can convert the ri_dams.csv to a shapefile:
 
@@ -50,7 +53,7 @@ if arcpy.Exists(output_feature_class):
 # Setting local variables:
 in_features = "towns.shp"
 out_feature_class = "glocester.shp"
-where_clause = '"NAME" = \'GLOCESTER\''
+
 
 arcpy.analysis.Select(in_features, out_feature_class, where_clause)
 
