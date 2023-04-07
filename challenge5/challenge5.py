@@ -5,7 +5,7 @@
 # locations. A fishnet is generated over these points to set up the final heat map for both species. You only need to
 # change line 13 for the coding challenge to your file location.
 
-# Creating a list of the species
+# declaring my imports, file path, etc.
 
 import os
 import csv
@@ -14,7 +14,7 @@ arcpy.env.workspace = r"C:\NRS_528\Coding_Challenges\NRS528_Justin\challenge5\Sp
 arcpy.env.overwriteOutput = True
 
 
-# Determining the species lists
+# Determining the species in the list
 
 species_list = []
 
@@ -52,11 +52,13 @@ for species in species_list:
     out_Layer = species
     saved_Layer = r"Species_Directory/" + species + "_output.shp"
 
-# Set the spatial reference for the point shapefiles
+# Setting the spatial reference for the point shapefiles
+
     spRef = arcpy.SpatialReference(4326)
     lyr = arcpy.MakeXYEventLayer_management(in_Table, x_coords, y_coords, out_Layer, spRef, "")
 
 # Print the total rows and create the file for the shape files
+
     print("The total rows in " + species + ".csv: " + str((arcpy.GetCount_management(out_Layer))))
 
     arcpy.CopyFeatures_management(lyr, saved_Layer)
@@ -65,20 +67,24 @@ for species in species_list:
         print("Created " + species + " point shapefile successfully!")
 
 
-# describing the extent of species point shapefiles
+# Describing the extent of species point shapefiles
+
     desc = arcpy.Describe(saved_Layer)
     XMin = desc.extent.XMin
     XMax = desc.extent.XMax
     YMin = desc.extent.YMin
     YMax = desc.extent.YMax
 
-# designating the spatial reference for species point shapefiles
+# Designating the spatial reference for species point shapefiles
+
     arcpy.env.outputCoordinateSystem = arcpy.SpatialReference(4326)
 
 # Creating the fishnet from the species point shapefiles
+
     outFeatureClass = r"Species_Directory/" + species + "_Fishnet.shp"
 
 # Setting the origin of the fishnet
+
     originCoordinate = str(XMin) + " " + str(YMin)
     yAxisCoordinate = str(XMin) + " " + str(YMin + 1)
     cellSizeWidth = "2"
@@ -97,7 +103,7 @@ for species in species_list:
     if arcpy.Exists(outFeatureClass):
         print("Created " + species + " fishnet file successfully!")
 
-# creating the heatmap from the species fishnet
+# Creating the heatmap from the species fishnet
 
     target_features=r"Species_Directory/" +species + "_Fishnet.shp"
     join_features=r"Species_Directory/" +species + "_Output.shp"
@@ -113,7 +119,8 @@ for species in species_list:
                                join_operation, join_type, field_mapping, match_option,
                                search_radius, distance_field_name)
 
-# checking for file existence and deleting excess files
+# Checking for file existence and deleting excess files
+
     if arcpy.Exists(out_feature_class):
         print("Created " + species + " heatmap file successfully!")
         arcpy.Delete_management(target_features)

@@ -1,24 +1,31 @@
 # Using coding challenge #5 example to improve it with the addition of file management
+
+# In this coding challenge, I'll create two species distribution heat maps that are from a single .csv file. The .csv file is
+# split into two separate species files and both are converted into point shapefiles that represent species
+# locations. A fishnet is generated over these points to set up the final heat map for both species. You only need to
+# change line 17 for the coding challenge to your file location.
+
+# declaring my imports, file paths and .csv file name
+
 import glob
 import os
 import csv
 import arcpy
-
 arcpy.env.overwriteOutput = True
+input_directory = r"C:\NRS_528\Coding_Challenges\NRS528_Justin\challenge7"
+data_file = "species_list.csv"
 species_list = []
 
-data_file = "species_list.csv"
-input_directory = r"C:\NRS_528\Coding_Challenges\NRS528_Justin\challenge7"
+# Creating file paths for the data. Temporary files will store the intermediate data. Both the data and file will be
+# deleted by the end of this code to clean up the results. The output file space will contain my final results.
 
-# Creating file paths for the data
 if not os.path.exists(os.path.join(input_directory, "output_files")):
     os.mkdir(os.path.join(input_directory, "output_files"))
 if not os.path.exists(os.path.join(input_directory, "temporary_files")):
     os.mkdir(os.path.join(input_directory, "temporary_files"))
 
-# Determining the species
+# Determining the species from the data file
 
-species_list = []
 with open(os.path.join(input_directory, data_file)) as species_csv:
     header_line = next(species_csv)
     for row in csv.reader(species_csv):
@@ -30,7 +37,8 @@ with open(os.path.join(input_directory, data_file)) as species_csv:
 
 print("..There are: " + str(len(species_list)) + " species to process..")
 
-# Splitting the species files into the temporary file folder
+# Splitting the species into two separate .csv files and placing them in the temporary file folder
+
 if len(species_list) > 1:
     for s in species_list:
         s_count = 1
@@ -41,19 +49,20 @@ if len(species_list) > 1:
                         file = open(os.path.join(input_directory, "temporary_files", str(s.replace(" ", "_")) + ".csv"), "w")
                         file.write(header_line)
                         s_count = 0
-                    #make well formatted line
-                    file.write(",".join(row))
-                    file.write("\n")
+                        file.write(",".join(row))
+                        file.write("\n")
         file.close()
 
-
 # Setting the file paths to extract data from .csv files in temporary folder and moving them to the output file path
+
 os.chdir(os.path.join(input_directory, "temporary_files"))
 arcpy.env.workspace = os.path.join(input_directory, "output_files")
 species_file_list = glob.glob("*.csv")
 
+
+# Converting the two .csv files into shapefiles that will go into my output file path
+
 count = 0
-# Converting .csv files into shapefiles that will go into my output file path
 
 for species_file in species_file_list:
     print(".. Processing: " + str(species_file) + " by converting to shapefile format")
@@ -64,7 +73,8 @@ for species_file in species_file_list:
     out_Layer = "species" + str(count)
     saved_Layer = species_file.replace(".csv", "") + ".shp"
 
-    # Setting the spatial reference
+# Setting the spatial reference
+
     spRef = arcpy.SpatialReference(4326)  # 4326 == WGS 1984
 
     lyr = arcpy.MakeXYEventLayer_management(in_Table, x_coords, y_coords, out_Layer, spRef, z_coords)
@@ -73,8 +83,8 @@ for species_file in species_file_list:
     arcpy.Delete_management(lyr)
     if arcpy.Exists(saved_Layer):
         print("Created species shapefiles successfully!")
-#
-    # Converting species shapefiles into fishnets that will go into my output file path
+
+# Converting species shapefiles into fishnets that will go into my output file path
 
     print(".. Processing: " + " species shapefiles by converting to fishnet format")
 
@@ -84,12 +94,14 @@ for species_file in species_file_list:
     YMin = desc.extent.YMin
     YMax = desc.extent.YMax
 
-    # Designating the spatial reference
+# Designating the spatial reference
+
     arcpy.env.outputCoordinateSystem = arcpy.SpatialReference(4326)
 
     outFeatureClass = species_file.replace(".csv", "") +"_Fishnet.shp"
 
-    # Setting the origin of the fishnet
+# Setting the origin of the fishnet
+
     originCoordinate = str(XMin) + " " + str(YMin)
     yAxisCoordinate = str(XMin) + " " + str(YMin + 1)
     cellSizeWidth = "0.75"
@@ -108,7 +120,7 @@ for species_file in species_file_list:
     if arcpy.Exists(outFeatureClass):
         print("Created species fishnet file successfully!")
 
-    # Converting species fishnets into heatmaps that will go into my output file path
+# Converting species fishnets into heatmaps that will go into my output file path
 
     print(".. Processing: " + " species fishnets by converting to heat map format")
     target_features = species_file.replace(".csv", "") +"_Fishnet.shp"
@@ -124,10 +136,12 @@ for species_file in species_file_list:
     arcpy.SpatialJoin_analysis(target_features, join_features, out_feature_class,
                                join_operation, join_type, field_mapping, match_option,
                                search_radius, distance_field_name)
-    # Cleaning up data in my file paths
+
+# Cleaning up data in my file paths
+
     if arcpy.Exists(out_feature_class):
         print("Created heatmap file successfully!")
         arcpy.Delete_management(target_features)
         arcpy.Delete_management(join_features)
 arcpy.Delete_management(os.path.join(input_directory, "temporary_files"))
-#
+
