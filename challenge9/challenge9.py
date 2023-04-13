@@ -56,7 +56,6 @@ with arcpy.da.SearchCursor(input_shp, fields, expression) as cursor:
 
 print("There are " + str(count) + " species with a photo.")
 
-
 # Setting local variables.
 
 out_path = arcpy.env.workspace
@@ -87,9 +86,11 @@ expression = arcpy.AddFieldDelimiters(input_shp, 'Other') + " = ' '"
 count = 0
 
 with arcpy.da.SearchCursor(input_shp, fields, expression) as cursor:
-    for row in cursor:
-        # print(u'{0}'.format(row[0]))
-        count = count + 1
+    with arcpy.da.InsertCursor(out_name, fields, "") as insert_cursor:
+        for row in cursor:
+            # print(u'{0}'.format(row[0]))
+            count = count + 1
+            insert_cursor.insertRow(row)
 
 print("There are " + str(count) + " species without a photo.")
 
