@@ -52,7 +52,7 @@ with arcpy.da.SearchCursor(input_shp, fields, expression) as cursor:
         for row in cursor:
             # print(u'{0}'.format(row[0]))
             count = count + 1
-            insert_cursor.insertRow([row])
+            insert_cursor.insertRow(row)
 
 print("There are " + str(count) + " species with a photo.")
 
