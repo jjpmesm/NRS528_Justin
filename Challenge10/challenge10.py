@@ -16,7 +16,6 @@ for month in listMonths:
 
     # Removing _BQA.tif files from months:
     listRasters = [x for x in listRasters if "_BQA.tif" not in x]
-    listRasters = [x for x in listRasters if "******" not in x]
 
     # Sorting the spectral bands of each month by ascending order:
     noExtensionlistRasters = [os.path.splitext(x)[0] for x in listRasters]
@@ -25,9 +24,5 @@ for month in listMonths:
     print("Spectral bands of month " + month + ": "+ str(sorted_listRasters))
 
     # My attempt at calculating the NDVI from the raster calculator copied script that I'm having issues with.
-
-    # output_raster = arcpy.ia.RasterCalculator(
-    #     expression= month + ' + "B5.tif" - month + "B4.tif" '
-    #                '/ ( month + "B5.tif" - month + "B4.tif" '
-    # )
-    # output_raster.save(outputDirectory)
+    outRaster = (sorted_listRasters("B5") - sorted_listRasters("B4")) / (sorted_listRasters("B5") + sorted_listRasters("B4"))
+    os.path.join(outputDirectory, "NDVI" + month + ".tif")
