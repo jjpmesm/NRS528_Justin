@@ -17,7 +17,7 @@ for month in listMonths:
     # Removing _BQA.tif files from months:
     listRasters = [x for x in listRasters if "_BQA.tif" not in x]
 
-    # Sorting the spectral bands of each month by ascending order:
+    # Sorting the spectral bands of each month in ascending order:
     noExtensionlistRasters = [os.path.splitext(x)[0] for x in listRasters]
     sorted_listRasters = sorted(noExtensionlistRasters, key=lambda x:int(x[42:]))
     sorted_listRasters = [x + ".tif" for x in sorted_listRasters]
