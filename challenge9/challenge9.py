@@ -12,7 +12,7 @@
 
 import arcpy
 arcpy.env.overwriteOutput = True
-arcpy.env.workspace = r"C:\NRS_528\Coding_Challenges\NRS528_Justin\challenge9"
+arcpy.env.workspace = r"C:\Data\Students_2023\Purcell\challenge9"
 input_shp = r"RI_Forest_Health_Works_Project%3A_Points_All_Invasives.shp"
 
 # Creating empty shapefile that will eventually contain the data with photos.
