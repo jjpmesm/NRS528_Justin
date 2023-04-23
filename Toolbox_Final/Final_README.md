@@ -1,4 +1,4 @@
-# Final Toolbox Assignment: Finding Historical points in Riparian Buffer Zones in RI
+# Final Toolbox Assignment: Finding Historical Points in Riparian Buffer Zones in RI
 
 ## Background
 
