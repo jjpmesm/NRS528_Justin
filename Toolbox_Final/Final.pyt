@@ -114,7 +114,7 @@ class Buffer(object):
 # Creating and labeling the dissolve buffers script:
 class Dissolve(object):
     def __init__(self):
-        self.label = "2. Clean up Buffers"
+        self.label = "2. Clean Up Buffers"
         self.description = ""
         self.canRunInBackground = False
 
