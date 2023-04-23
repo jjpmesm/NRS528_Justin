@@ -1,13 +1,12 @@
-# In this coding challenge, my objective is to utilize the arcpy.da module to undertake some basic partitioning of my dataset.
-# In this coding challenge, I work with the Forest Health Works dataset from RI GIS.
-
-# Using the arcpy.da module , I extract all sites that have a photo of the invasive species (Field: PHOTO) into a new Shapefile,
+# In this coding challenge, my objective is to utilize the arcpy.da module to undertake some basic partitioning of my
+# dataset. In this coding challenge, I work with the Forest Health Works dataset from RI GIS. Using the arcpy.da
+# module , I extract all sites that have a photo of the invasive species (Field: PHOTO) into a new Shapefile,
 # and do some basic counts of the dataset. In summary, I address the following:
-
+#
 # Count how many individual records have photos, and how many do not (2 numbers), print the results.
-
+#
 # Count how many unique species there are in the dataset, print the result.
-
+#
 # Generate two shapefiles, one with photos and the other without.
 
 import arcpy
@@ -16,7 +15,6 @@ arcpy.env.workspace = r"C:\Data\Students_2023\Purcell\challenge9"
 input_shp = r"RI_Forest_Health_Works_Project%3A_Points_All_Invasives.shp"
 
 # Creating empty shapefile that will eventually contain the data with photos.
-
 out_path = arcpy.env.workspace
 out_name = "with_photos.shp"
 geometry_type = "POINT"
@@ -26,7 +24,6 @@ has_z = "DISABLED"
 spatial_ref = 4326
 
 # Executing CreateFeatureclass.
-
 arcpy.CreateFeatureclass_management(out_path, out_name, geometry_type, template,
                                     has_m, has_z, spatial_ref)
 
@@ -34,9 +31,7 @@ if arcpy.Exists(out_name):
     print("Created the photos shapefile successfully!")
 
 # Counting individual records that do have photos and adding the data to the new shapefile.
-
 fields = [f.name for f in arcpy.ListFields(input_shp)]
-
 expression = arcpy.AddFieldDelimiters(input_shp, 'Other') + " = 'PHOTO'"
 count = 0
 
@@ -50,7 +45,6 @@ with arcpy.da.SearchCursor(input_shp, fields, expression) as cursor:
 print("There are " + str(count) + " species with a photo.")
 
 # Creating empty shapefile that will eventually contain the data with photos.
-
 out_path = arcpy.env.workspace
 out_name = "without_photos.shp"
 geometry_type = "POINT"
@@ -60,7 +54,6 @@ has_z = "DISABLED"
 spatial_ref = 4326
 
 # Executing CreateFeatureclass.
-
 arcpy.CreateFeatureclass_management(out_path, out_name, geometry_type, template,
                                     has_m, has_z, spatial_ref)
 
@@ -68,9 +61,7 @@ if arcpy.Exists(out_name):
     print("Created the without photos shapefile successfully!")
 
 # Counting individual records that do not have photos and adding the data to the new shapefile.
-
 fields = [f.name for f in arcpy.ListFields(input_shp)]
-
 expression = arcpy.AddFieldDelimiters(input_shp, 'Other') + " = ' '"
 count = 0
 
@@ -84,7 +75,6 @@ with arcpy.da.SearchCursor(input_shp, fields, expression) as cursor:
 print("There are " + str(count) + " species without a photo.")
 
 # Counting how many unique species are listed.
-
 fields = ['Species']
 species_list = []
 count = 0
