@@ -1,5 +1,5 @@
 # For this challenge, I have data folders of Landsat imagery from different months and their spectral bands.
-# For this coding challenge, I extracted the .tif files of each month and their spectral bands in a list.
+# For this coding challenge, I extracted the .tif files of each month and their spectral bands.
 # The next step is to calculate the NDVI of each month by using the appropriate bands: ((B5-B4)/(B5+B4)).
 # Example input data is too large to upload, please download .zip file from the challenge 10 assignment folder!
 # Only line 14 needs to be changed.
