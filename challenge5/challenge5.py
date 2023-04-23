@@ -1,12 +1,11 @@
 # Challenge #5: Heat maps for the bull shark and whale shark (sourced from obis).
 
-# In this coding challenge, I'll create two species distribution heat maps that are from a single .csv file. The .csv file is
-# split into two separate species files and both are converted into point shapefiles that represent species
+# In this coding challenge, I'll create two species distribution heat maps that are from a single .csv file. The .csv
+# file is split into two separate species files and both are converted into point shapefiles that represent species
 # locations. A fishnet is generated over these points to set up the final heat map for both species. You only need to
-# change line 13 for the coding challenge to your file location.
+# change line 12 for the coding challenge to your file location.
 
 # declaring my imports, file path, etc.
-
 import os
 import csv
 import arcpy
@@ -15,7 +14,6 @@ arcpy.env.overwriteOutput = True
 
 
 # Determining the species in the list
-
 species_list = []
 
 with open("species_list.csv") as species_csv:
@@ -26,7 +24,6 @@ with open("species_list.csv") as species_csv:
     print("The two species in species_file.csv are: " + str(species_list))
 
 # Splitting the larger .csv species file into separate .csv files based on species
-
 os.mkdir("Species_Directory")
 
 for species in species_list:
@@ -45,7 +42,6 @@ for species in species_list:
     file.close()
 
 # Now time to create point shapefiles for the species.csv files
-
     in_Table = r"Species_Directory/" + species + ".csv"
     x_coords = "longitude"
     y_coords = "latitude"
@@ -53,22 +49,16 @@ for species in species_list:
     saved_Layer = r"Species_Directory/" + species + "_output.shp"
 
 # Setting the spatial reference for the point shapefiles
-
     spRef = arcpy.SpatialReference(4326)
     lyr = arcpy.MakeXYEventLayer_management(in_Table, x_coords, y_coords, out_Layer, spRef, "")
 
 # Print the total rows and create the file for the shape files
-
     print("The total rows in " + species + ".csv: " + str((arcpy.GetCount_management(out_Layer))))
-
     arcpy.CopyFeatures_management(lyr, saved_Layer)
-
     if arcpy.Exists(saved_Layer):
         print("Created " + species + " point shapefile successfully!")
 
-
 # Describing the extent of species point shapefiles
-
     desc = arcpy.Describe(saved_Layer)
     XMin = desc.extent.XMin
     XMax = desc.extent.XMax
@@ -76,15 +66,12 @@ for species in species_list:
     YMax = desc.extent.YMax
 
 # Designating the spatial reference for species point shapefiles
-
     arcpy.env.outputCoordinateSystem = arcpy.SpatialReference(4326)
 
 # Creating the fishnet from the species point shapefiles
-
     outFeatureClass = r"Species_Directory/" + species + "_Fishnet.shp"
 
 # Setting the origin of the fishnet
-
     originCoordinate = str(XMin) + " " + str(YMin)
     yAxisCoordinate = str(XMin) + " " + str(YMin + 1)
     cellSizeWidth = "2"
@@ -104,7 +91,6 @@ for species in species_list:
         print("Created " + species + " fishnet file successfully!")
 
 # Creating the heatmap from the species fishnet
-
     target_features=r"Species_Directory/" +species + "_Fishnet.shp"
     join_features=r"Species_Directory/" +species + "_Output.shp"
     out_feature_class=r"Species_Directory/" +species + "_HeatMap.shp"
@@ -120,7 +106,6 @@ for species in species_list:
                                search_radius, distance_field_name)
 
 # Checking for file existence and deleting excess files
-
     if arcpy.Exists(out_feature_class):
         print("Created " + species + " heatmap file successfully!")
         arcpy.Delete_management(target_features)
