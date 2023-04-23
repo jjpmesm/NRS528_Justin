@@ -1,5 +1,4 @@
 # Replicate this tree of directories and subdirectories:
-
 # ├── draft_code
 # |   ├── pending
 # |   └── complete
@@ -14,27 +13,21 @@
 
 import os
 
+# Creating the directory trees:
 os.mkdir(r"D:\draft_code")
 os.mkdir(r"D:\draft_code\pending")
 os.mkdir(r"D:\draft_code\complete")
-
 os.mkdir(r"D:\includes")
-
 os.mkdir(r"D:\layouts")
 os.mkdir(r"D:\layouts\default")
 os.mkdir(r"D:\layouts\post")
 os.mkdir(r"D:\layouts\post\posted")
-
 os.mkdir(r"D:\site")
 
-
+# Removing the directory tree:
 os.removedirs(r"D:\draft_code\pending")
 os.removedirs(r"D:\draft_code\complete")
-
-
 os.rmdir(r"D:\includes")
-
 os.removedirs(r"D:\layouts\post\posted")
 os.removedirs(r"D:\layouts\default")
-
 os.rmdir(r"D:\site")
