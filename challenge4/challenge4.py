@@ -7,6 +7,8 @@
 
 # Comment your code well.
 import arcpy
+
+arcpy.env.overwriteOutput = True
 arcpy.env.workspace = r"C:\NRS_528\Coding_Challenges\NRS528_Justin\challenge4"
 
 # I'll be using the natural heritage areas 2021 dataset from RIGIS for this coding challenge
@@ -23,8 +25,8 @@ print("Spatial Reference Type: %s" % desc_data.spatialReference.type)
 print("Spatial Unit: %s" % desc_data.spatialReference.linearUnitName)
 
 # min Y and max Y extent:
-print("Extent:\n  YMin: {0},\n YMax: {1}".format(desc_data.extent.YMin, desc_data.extent.YMax))
-
+print("Extent = XMin: {0}, XMax: {1}, YMin: {2}, YMax: {3}".format(desc_data.extent.XMin, desc_data.extent.XMax,
+                                                                   desc_data.extent.YMin, desc_data.extent.YMax))
 # Broken down Feature to Class tool:
 in_features = "RI_Natural_Heritage_Area_Dec2021.shp"
 out_feature_class = "points.shp"
