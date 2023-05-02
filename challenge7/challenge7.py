@@ -32,7 +32,7 @@ with open(os.path.join(input_directory, data_file)) as species_csv:
         except:
             pass
 
-print("..There are: " + str(len(species_list)) + " species to process..")
+print("There are: " + str(len(species_list)) + " species to process..")
 
 # Splitting the species into two separate .csv files and placing them in the temporary file folder
 if len(species_list) > 1:
@@ -77,7 +77,7 @@ for species_file in species_file_list:
         print("Created species shapefiles successfully!")
 
     # Converting species shapefiles into fishnets that will go into my output file path
-    print(".. Processing: " + " species shapefiles by converting to fishnet format")
+    print("Processing: " + " species shapefiles by converting to fishnet format")
 
     desc = arcpy.Describe(species_file.replace(".csv", "") + ".shp")
     XMin = desc.extent.XMin
