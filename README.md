@@ -1,5 +1,5 @@
 # Justin Purcell - Introduction
-![Profile](https://media.licdn.com/dms/image/C4E03AQFuyfjZqAeIzQ/profile-displayphoto-shrink_200_200/0/1610384535007?e=1680134400&v=beta&t=-sQH2T5KwJG0lewvfjyuMtMchXJGppyCGimNbmU_sEc)
+![me](https://user-images.githubusercontent.com/123785630/236307584-a424dcf2-5510-4ab8-8bca-792847b8d35b.jpg)
 ## Background
 
 Hi everyone!
