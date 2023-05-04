@@ -2,11 +2,12 @@
 # Hawaii dataset, obtained from here (https://github.com/datasets/co2-ppm-daily/tree/master/data).
 # Using Python (csv) calculate the following:
 # Annual average for each year in the dataset.
-
 import csv
 
 years = []
 ppm = []
+
+# Creating a list of the years:
 with open('challenge3_part3.csv') as date_csv:
     next(date_csv)
     for row in csv.reader(date_csv):
@@ -15,7 +16,8 @@ with open('challenge3_part3.csv') as date_csv:
         if year not in years:
             years.append(year)
 print(years)
-#
+
+# Finding the average ppm per year in the dataset:
 for year_test in years:
     total = 0
     counter = 0
@@ -31,10 +33,7 @@ for year_test in years:
             initial_math_value = initial_math_value + float(i)
     print(year + ": " + str(total))
 
-
 # Minimum, maximum and average for the entire dataset.
-
-
 with open('challenge3_part3.csv') as value_csv:
     next(value_csv)
     for row in csv.reader(value_csv):
@@ -42,20 +41,19 @@ with open('challenge3_part3.csv') as value_csv:
         if value not in ppm:
             ppm.append(float(value))
 
-print(ppm)
-print(min(ppm))
-print(max(ppm))
+# print(ppm)
+print("The minimum ppm value: " + str(min(ppm)))
+print("The maximum ppm value: " + str(max(ppm)))
 with open('challenge3_part3.csv') as value_csv:
     next(value_csv)
     total = 0
     for row in csv.reader(value_csv):
         total += float(row[1])
-    print(format(total, 'f'))
-    print(total/len(ppm))
-    mean_ppm_all_dataset = total/len(ppm)
-    print(type(total))
-#
-# # # # Seasonal average if Spring (March, April, May), Summer (June, July, August), Autumn (September, October, November) and Winter (December, January, February).
+    print("The average ppm for the entire dataset: " + str(total / len(ppm)))
+    mean_ppm_all_dataset = total / len(ppm)
+
+# Seasonal average if Spring (March, April, May), Summer (June, July, August), Autumn (September, October,
+# November) and Winter (December, January, February).
 spring_list = ['03', '04', '05']
 summer_list = ['06', '07', '08']
 autumn_list = ['09', '10', '11']
@@ -79,23 +77,21 @@ with open('challenge3_part3.csv') as date_csv:
             autumn_value_list.append(float(row[1]))
         if month in winter_list:
             winter_value_list.append(float(row[1]))
-#
+
 print("Spring value:")
-print(sum(spring_value_list)/len(spring_value_list))
+print(sum(spring_value_list) / len(spring_value_list))
 print("Summer value:")
-print(sum(summer_value_list)/len(summer_value_list))
+print(sum(summer_value_list) / len(summer_value_list))
 print("Autumn value:")
-print(sum(autumn_value_list)/len(autumn_value_list))
+print(sum(autumn_value_list) / len(autumn_value_list))
 print("Winter value:")
-print(sum(winter_value_list)/len(winter_value_list))
-# #
-# # Calculate the anomaly for each value in the dataset relative to the mean for the entire time series.
-#
-# # current value - mean
-#
+print(sum(winter_value_list) / len(winter_value_list))
+
+# Calculate the anomaly for each value in the dataset relative to the mean for the entire time series.
+# current value - mean
 # 1. calculate mean for entire dataset DONE
 # 2. Subtract mean value from each observation
-#
+
 with open('challenge3_part3.csv') as date_csv:
     next(date_csv)
     for row in csv.reader(date_csv):
